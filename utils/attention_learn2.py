@@ -1,10 +1,6 @@
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
-X = torch.ones((2, 1, 4))
-Y = torch.ones((2, 4, 6))
-print(X,'\n',Y)
-print(torch.bmm(X, Y))
 
 weights = torch.ones((2, 10)) * 0.1
 values = torch.arange(20.0).reshape((2, 10))

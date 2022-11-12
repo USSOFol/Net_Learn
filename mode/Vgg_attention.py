@@ -74,5 +74,5 @@ def vgg11_bn(**kwargs):
     return model
 
 if __name__ == '__main__':
-    vg16 = vgg11_bn()
+    vg16 = vgg16()
     print(vg16)

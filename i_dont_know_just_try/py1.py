@@ -74,3 +74,5 @@ aa = torch.tensor([[1,1],[1,2]])
 bb = torch.tensor([[1,1],[1,3]])
 print(torch.mul(aa,bb))
 print(l.view(2,1,-1).sum(dim=2))
+
+print(torch.cat((aa,bb),dim=1))
