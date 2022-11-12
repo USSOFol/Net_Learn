@@ -1,3 +1,13 @@
+详细解释一下attention机制的矩阵代码使用
+
+
+
+
+
+
+
+```python
+
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -62,7 +72,6 @@ values = Y_tile[(1 - torch.eye(n_train)).type(torch.bool)].reshape((n_train, -1)
 # values也是这么处理的
 print('values',values.unsqueeze(-1).size())
 net = NWKernelRegression()
-print(net)
 loss = nn.MSELoss(reduction='none')
 # 均方根误差
 trainer = torch.optim.SGD(net.parameters(), lr=0.5)
@@ -82,4 +91,5 @@ print(y_pred)
 plt.figure()
 plt.plot(x_test.reshape(-1),y_pred,x_test,y_truth)
 plt.show()
+```
 

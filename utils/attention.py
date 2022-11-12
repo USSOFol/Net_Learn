@@ -5,6 +5,7 @@ import torch.nn.functional as F
 本代码用于实现注意力机制
 """
 class ProjectorBlock(nn.Module):
+    #
     def __init__(self,in_features,out_features):
         #这里进行一个卷积
         super(ProjectorBlock,self).__init__()
@@ -41,6 +42,15 @@ Temporal attention block
 Reference: https://github.com/philipperemy/keras-attention-mechanism
 """
 class TemporalAttn(nn.Module):
+    def __init__(self,hidden_size):
+        super(TemporalAttn,self).__init__()
+        self.hidden_size = hidden_size
+        self.fc1 = nn.Linear(self.hidden_size,self.hidden_size,bias=False)
+        self.fc2 = nn.Linear(self.hidden_size*2,self.hidden_size,bias=False)
+
+    def forward(self,hidden_states):
+        # 输入隐藏层
+        score_first_part = self.fc1(hidden_states)
 
 
 
