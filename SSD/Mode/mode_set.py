@@ -8,7 +8,7 @@ class TinySSD(nn.Module):
     """
     本网络用于多框检测，检测一个模型中出现的类，这里将会对这个模型进行一个详细的讲解
     """
-    def __init__(self,num_class,sizes,ratios,**kwargs):
+    def __init__(self,num_classes,sizes,ratios,**kwargs):
         """
         输入初始化
         :param num_class:要识别的类
@@ -21,12 +21,12 @@ class TinySSD(nn.Module):
         self.ratios =ratios
         # 每个点上的锚框个数
         super(TinySSD,self).__init__(**kwargs)
-        self.num_class = num_class
+        self.num_class = num_classes
         idx_to_in_channels = [64,128,128,128,128]
         for i in range(5):
             setattr(self,f'blk_{i}',self.get_blk(i))
             # 输入为对象,字符串,属性值,设置属性值，但是该属性不一定存在，返回就是self.blk_i = blk
-            setattr(self,f"cls_{i}",self.cls_preictor(idx_to_in_channels[i],num_anchors,num_class))
+            setattr(self,f"cls_{i}",self.cls_preictor(idx_to_in_channels[i],num_anchors,self.num_class))
             #
             setattr(self,f"bbox_{i}",self.bbox_predictor(idx_to_in_channels[i],num_anchors))
             #

@@ -11,11 +11,11 @@ d2l.DATA_HUB['banana-detection'] = (
     d2l.DATA_URL + 'banana-detection.zip',
     '5de26c8fce5ccdea9f91267273464dc968d20d72')
 """
-def read_data_bananas(data_dir = "../data/banana-detection" , is_train=True):
+def read_data_bananas(data_dir = "data/banana-detection" , is_train=True):
     """读取香蕉检测数据集中的图像和标签"""
 
     csv_fname = os.path.join(data_dir, 'bananas_train' if is_train else 'bananas_val', 'label.csv')
-    # print(csv_fname)
+    print(csv_fname)
     # 如果istrain为true，拼接为，
     csv_data = pd.read_csv(csv_fname)
     #     img_name  label  xmin  ymin  xmax  ymax
@@ -25,8 +25,7 @@ def read_data_bananas(data_dir = "../data/banana-detection" , is_train=True):
     images, targets = [], []
     for img_name, target in csv_data.iterrows():
         # iterrows以行作为迭代器，输出index 和index后的目标
-        path_name_img = os.path.join(data_dir, 'bananas_train' if is_train else
-        'bananas_val', 'images', f'{img_name}')
+        path_name_img = os.path.join(data_dir, 'bananas_train' if is_train else 'bananas_val', 'images', f'{img_name}')
         # print(path_name_img)
         img = cv2.imread(path_name_img)
         # print(img.shape)
