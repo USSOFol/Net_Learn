@@ -125,7 +125,7 @@ if __name__ == '__main__':
     Y1 = forward(torch.zeros((2, 8, 20, 20)), cls_predictor(8, 5, 10))
     Y2 = forward(torch.zeros((2, 16, 10, 10)), cls_predictor(16, 3, 10))
     print(Y1.shape, Y2.shape)
-    print(forward(torch.zeros((2, 3, 20, 20)), down_sample_blk(3, 10)).shape)
+    print( down_sample_blk(3, 10))
     print(forward(torch.zeros((2, 3, 256, 256)), base_net()).shape)
     sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
              [0.88, 0.961]]
@@ -138,4 +138,6 @@ if __name__ == '__main__':
     print('output anchors:', anchors.shape)
     print('output class preds:', cls_preds.shape)
     print('output bbox preds:', bbox_preds.shape)
+    ssd = TinySSD(1)
+    print(ssd)
 
