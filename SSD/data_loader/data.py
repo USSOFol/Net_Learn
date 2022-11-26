@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import torch
 import cv2
+import numpy as np
 import torchvision
 import matplotlib.pyplot as plt
 from d2l import torch as d2l
@@ -28,8 +29,10 @@ def read_data_bananas(data_dir = "data/banana-detection" , is_train=True):
         path_name_img = os.path.join(data_dir, 'bananas_train' if is_train else 'bananas_val', 'images', f'{img_name}')
         # print(path_name_img)
         img = cv2.imread(path_name_img)
+        # 注意cv2读出来的是三个通道
         # print(img.shape)
-        img = torch.from_numpy(img)
+        img = torch.from_numpy(np.array([img[:, :, 0], img[:, :, 1], img[:, :, 2]]))
+        # img = torch.from_numpy(img)
         # print(img.shape)
         images.append(img)
         # image_banana = torchvision.io.read_image(path_name_img)

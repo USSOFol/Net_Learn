@@ -15,7 +15,6 @@ def train(dataloader, model, loss_fn, optimizer,device,flag_plot=False,ax=[],ay=
         # Backpropagation
         optimizer.zero_grad()
         loss.backward()
-
         optimizer.step()
 
         if batch % 50 == 0:

@@ -112,8 +112,12 @@ class TinySSD(nn.Module):
         for i in range(5):
             # getattr(self,'blk_%d'%i)即访问self.blk_i
             X, anchors[i], cls_preds[i], bbox_preds[i] = blk_forward(
-                X, getattr(self, f'blk_{i}'), sizes[i], ratios[i],
-                getattr(self, f'cls_{i}'), getattr(self, f'bbox_{i}'))
+                X,
+                getattr(self, f'blk_{i}'),
+                sizes[i], ratios[i],
+                getattr(self, f'cls_{i}'),
+                getattr(self, f'bbox_{i}'))
+
         anchors = torch.cat(anchors, dim=1)
         cls_preds = concat_preds(cls_preds)
         cls_preds = cls_preds.reshape(
@@ -140,4 +144,6 @@ if __name__ == '__main__':
     print('output bbox preds:', bbox_preds.shape)
     ssd = TinySSD(1)
     print(ssd)
+    x = torch.randn(1,3,256,256)
+    ssd(x)
 

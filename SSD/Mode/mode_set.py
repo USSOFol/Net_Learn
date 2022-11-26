@@ -30,13 +30,8 @@ class TinySSD(nn.Module):
             #
             setattr(self,f"bbox_{i}",self.bbox_predictor(idx_to_in_channels[i],num_anchors))
             #
+############# 1 ######################o .]']
 
-
-
-
-
-
-############# 1 ######################
     def get_blk(self,i):
         # 选择层
         if i == 0 :
@@ -109,8 +104,8 @@ class TinySSD(nn.Module):
         y =blk(x)
         anchors = Box.multibox_prior(y,sizes=size,ratios = ratio)
         # 返回锚框的对角值
-        cls_preds = cls_prdictor
-        bbox_preds = bbox_predictor
+        cls_preds = cls_prdictor(y)
+        bbox_preds = bbox_predictor(y)
         return (y , anchors, cls_preds, bbox_preds)
     ######### 5 #########################################
     def flatten_pred(self,pred):
@@ -120,6 +115,7 @@ class TinySSD(nn.Module):
     def forward(self,x):
         anchors, cls_pred, bbox_pred = [None]*5,[None]*5,[None]*5
         for i in range(5):
+            # 这里为5是因为锚框大小共有五个等级，每个等级的中心点产生四个大小的锚框，锚框依次变大
             # getattr(self,"blk_{i}"),返回self.blk_i
             x, anchors[i], cls_pred[i], bbox_pred[i] = self.blk_forward(x,
                                                                         getattr(self,f"blk_{i}"),
@@ -141,9 +137,12 @@ if __name__ =="__main__":
     print(m(n).size())
     sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
              [0.88, 0.961]]
+    #print(sizes[0])
     ratios = [[1, 2, 0.5]] * 5
-    ssd = TinySSD(10,sizes,ratios)
+    ssd = TinySSD(1,sizes,ratios)
     print(ssd)
+    x = torch.randn(1,3,256,256)
+    print(ssd(x))
 
 
 

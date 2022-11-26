@@ -1,5 +1,7 @@
 import torch
-
+from SSD.utiles.loss import calc_loss
+from SSD.utiles.loss import cls_eval
+from SSD.utiles.loss import bbox_eval
 #from parameter import Config
 """定义测试函数"""
 def test(dataloader, model, loss_fn,device):

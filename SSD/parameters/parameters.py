@@ -18,7 +18,7 @@ class Config:
     def batch_size(self):
         return self.my_batch_size
     def epochs(self):
-        return self.my_batch_size
+        return self.my_epoch
     def img_size(self):
         return self.my_img_size
     def n_classes(self):

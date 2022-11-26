@@ -269,8 +269,8 @@ class Box:
     @staticmethod
     def multibox_target(anchors, labels):
         """
-        :param anchors:
-        :param labels:
+        :param anchors: 锚框值[对角坐标]
+        :param labels: 真实锚框位置以及标记[类，对角坐标]
         :return: （每个锚框的偏移值（背景=0），背景和锚框的标志，分类）
         """
         """使用真实边界框标记锚框"""
