@@ -110,6 +110,7 @@ class TinySSD(nn.Module):
     ######### 5 #########################################
     def flatten_pred(self,pred):
         return torch.flatten(pred.permute(0,2,3,1),start_dim= 1 )
+        # 将类别预测变成Bx[4*(n+1)]xmxn
     def concat_pred(self, preds):
         return torch.cat([self.flatten_pred(p) for p in preds],dim = 1)
     def forward(self,x):
@@ -117,16 +118,23 @@ class TinySSD(nn.Module):
         for i in range(5):
             # 这里为5是因为锚框大小共有五个等级，每个等级的中心点产生四个大小的锚框，锚框依次变大
             # getattr(self,"blk_{i}"),返回self.blk_i
+
             x, anchors[i], cls_pred[i], bbox_pred[i] = self.blk_forward(x,
                                                                         getattr(self,f"blk_{i}"),
                                                                         self.sizes[i],
                                                                         self.ratios[i],
                                                                         getattr(self,f"cls_{i}"),
                                                                         getattr(self,f"bbox_{i}"))
+
         anchors = torch.cat(anchors, dim =1)
-        cls_pred = self.concat_pred(cls_pred)
+        # 按照列进行拼接,每一列都是一个锚框的对角坐标
+        cls_pred = self.concat_pred(cls_pred)# 类别预测,b*
         cls_pred = cls_pred.reshape(cls_pred.shape[0],-1,self.num_class+1)
+        # 每个框的预测，输出为一个N C H的矩阵，N为1，C为总共的锚框数量，H为每个类别的预测值
+        #print(cls_pred)
         bbox_pred =self.concat_pred(bbox_pred)
+
+        #每隔四个数字为一个锚框的偏移值
         return anchors,cls_pred,bbox_pred
 
 
