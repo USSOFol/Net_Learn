@@ -6,7 +6,14 @@ import torch
 from SSD.train_test.train import train
 from SSD.train_test.test import test
 import matplotlib.pyplot as plt
+import cv2
+from SSD.utiles.predict import predict
 """准备训练数据"""
+
+
+
+
+
 if __name__ == '__main__':
     config =parameters.Config(batch_size=36,n_classes=1,epoch=10)
     sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
@@ -36,5 +43,13 @@ if __name__ == '__main__':
               ay=train_loss1, epoch=t)
         # test(test_data, model, config.loss_func(), config.device())
     print("Done!")
-    save_path = 'Model_save/SSD.pth'
-    torch.save(model.state_dict(), save_path)
+    img_test = cv2.imread("banana.png")
+    img_test = torch.from_numpy(img_test).permute(2,0,1)
+    X = img_test.unsqueeze(0).float()
+    img = X.squeeze(0).permute(1, 2, 0).long()
+    output = predict(X,net=model,device= config.device())
+    print(output)
+
+
+    # save_path = '../Model_save/SSD.pth'
+    # torch.save(model.state_dict(), save_path)

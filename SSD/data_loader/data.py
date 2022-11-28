@@ -7,14 +7,12 @@ import torchvision
 import matplotlib.pyplot as plt
 from d2l import torch as d2l
 #@save
-"""
-d2l.DATA_HUB['banana-detection'] = (
-    d2l.DATA_URL + 'banana-detection.zip',
-    '5de26c8fce5ccdea9f91267273464dc968d20d72')
-"""
+
+# d2l.DATA_HUB['banana-detection'] = (d2l.DATA_URL + 'banana-detection.zip','5de26c8fce5ccdea9f91267273464dc968d20d72')
+
 def read_data_bananas(data_dir = "data/banana-detection" , is_train=True):
     """读取香蕉检测数据集中的图像和标签"""
-
+    # data_dir = d2l.download_extract('banana-detection')
     csv_fname = os.path.join(data_dir, 'bananas_train' if is_train else 'bananas_val', 'label.csv')
     print(csv_fname)
     # 如果istrain为true，拼接为，
